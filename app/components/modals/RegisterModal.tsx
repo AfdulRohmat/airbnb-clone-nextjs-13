@@ -9,6 +9,7 @@ import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import Button from "../Button";
+import { toast } from "react-hot-toast";
 
 interface RegisterModalProps {}
 
@@ -33,11 +34,11 @@ const RegisterModal: React.FC<RegisterModalProps> = (props) => {
     axios
       .post("/api/register", data)
       .then(() => {
-        // toast.success("Registered!");
+        toast.success("Registered!");
         registerModal.onClose();
       })
       .catch((error) => {
-        console.log("error", error);
+        toast.error("Something went wrong");
       })
       .finally(() => {
         setIsLoading(false);
@@ -63,8 +64,8 @@ const RegisterModal: React.FC<RegisterModalProps> = (props) => {
 
         {/* Input nama */}
         <Input
-          id="email"
-          label="email"
+          id="name"
+          label="name"
           disabled={isLoading}
           register={register}
           errors={errors}
@@ -111,7 +112,7 @@ const RegisterModal: React.FC<RegisterModalProps> = (props) => {
             Already have an account ?{" "}
             <span
               onClick={() => onToggle()}
-              className="text-neutral-800 cursor-pointer hover:underline"
+              className="text-neutral-800 cursor-pointer hover:underline font-semibold"
             >
               Log In
             </span>
