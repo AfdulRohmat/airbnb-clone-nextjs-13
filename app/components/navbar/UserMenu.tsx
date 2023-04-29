@@ -4,13 +4,21 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
+import { User } from "@prisma/client";
+import { signOut } from "next-auth/react";
 
-export default function UserMenu() {
+interface UserMenuProps {
+  currentUser?: User | null;
+}
+
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
   const registerModalHooks = useRegisterModal();
+  const loginModalHooks = useLoginModal();
 
   return (
     <div className="relative">
@@ -39,18 +47,37 @@ export default function UserMenu() {
       {isOpen && (
         <div className="absolute rounded-xl shadow-md w-[40vw] md:w-3/4 bg-white verflow-hidden right-0 top-12 text-sm">
           <div className="flex flex-col cursor-pointer">
-            <>
-              <MenuItem label="Login" onCLick={() => {}} />
-              <MenuItem
-                label="Sign Up"
-                onCLick={() => {
-                  registerModalHooks.onOpen();
-                }}
-              />
-            </>
+            {currentUser ? (
+              <>
+                <MenuItem label="My Trips" onCLick={() => {}} />
+                <MenuItem label="My favorites" onCLick={() => {}} />
+                <MenuItem label="My reservations" onCLick={() => {}} />
+                <MenuItem label="My properties" onCLick={() => {}} />
+                <MenuItem label="Airbnb your home" onCLick={() => {}} />
+                <hr />
+                <MenuItem label="Logout" onCLick={() => signOut()} />
+              </>
+            ) : (
+              <>
+                <MenuItem
+                  label="Login"
+                  onCLick={() => {
+                    loginModalHooks.onOpen();
+                  }}
+                />
+                <MenuItem
+                  label="Sign Up"
+                  onCLick={() => {
+                    registerModalHooks.onOpen();
+                  }}
+                />
+              </>
+            )}
           </div>
         </div>
       )}
     </div>
   );
-}
+};
+
+export default UserMenu;
