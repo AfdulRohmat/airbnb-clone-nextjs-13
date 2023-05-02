@@ -11,6 +11,7 @@ import Input from "../inputs/Input";
 import Button from "../Button";
 import { toast } from "react-hot-toast";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import { signIn } from "next-auth/react";
 
 interface RegisterModalProps {}
 
@@ -98,7 +99,7 @@ const RegisterModal: React.FC<RegisterModalProps> = (props) => {
           outline
           label="Continue with Google"
           icon={FcGoogle}
-          onClick={() => {}}
+          onClick={() => signIn('google')}
         />
 
         {/* Login with Github */}
@@ -106,7 +107,7 @@ const RegisterModal: React.FC<RegisterModalProps> = (props) => {
           outline
           label="Continue with Github"
           icon={AiFillGithub}
-          onClick={() => {}}
+          onClick={() => signIn("github")}
         />
 
         {/* Go to Login */}

@@ -93,7 +93,7 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
           outline
           label="Continue with Google"
           icon={FcGoogle}
-          onClick={() => {}}
+          onClick={() => signIn('google')}
         />
 
         {/* Login with Github */}
@@ -101,7 +101,7 @@ const LoginModal: React.FC<LoginModalProps> = (props) => {
           outline
           label="Continue with Github"
           icon={AiFillGithub}
-          onClick={() => {}}
+          onClick={() => signIn("github")}
         />
 
         {/* Go to Login */}
