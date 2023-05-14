@@ -7,6 +7,8 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { signOut } from "next-auth/react";
 import { SafeUser } from "@/app/types";
+import LoginModal from "../modals/LoginModal";
+import useRentModal from "@/app/hooks/useRentModal";
 
 interface UserMenuProps {
   currentUser?: SafeUser | null;
@@ -17,15 +19,24 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
-  const registerModalHooks = useRegisterModal();
-  const loginModalHooks = useLoginModal();
+
+  const loginModal = useLoginModal();
+  const rentModal = useRentModal();
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    // Open Rent Modal
+    rentModal.onOpen();
+  }, [currentUser, loginModal, useRentModal]);
 
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         {/* TITLE */}
         <div
-          onClick={() => {}}
+          onClick={() => {onRent()}}
           className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-200 transition cursor-pointer"
         >
           Airbnb your home
@@ -53,7 +64,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 <MenuItem label="My favorites" onCLick={() => {}} />
                 <MenuItem label="My reservations" onCLick={() => {}} />
                 <MenuItem label="My properties" onCLick={() => {}} />
-                <MenuItem label="Airbnb your home" onCLick={() => {}} />
+                <MenuItem label="Airbnb your home" onCLick={() => {rentModal.onOpen()}} />
                 <hr />
                 <MenuItem label="Logout" onCLick={() => signOut()} />
               </>
@@ -62,13 +73,13 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                 <MenuItem
                   label="Login"
                   onCLick={() => {
-                    loginModalHooks.onOpen();
+                    loginModal.onOpen();
                   }}
                 />
                 <MenuItem
                   label="Sign Up"
                   onCLick={() => {
-                    registerModalHooks.onOpen();
+                    loginModal.onOpen();
                   }}
                 />
               </>

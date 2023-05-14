@@ -66,7 +66,7 @@ const Modal: React.FC<ModalProps> = (props) => {
                     ${showModal ? "opacity-100" : "opacity-0"}
                 `}
           >
-            <div className="translate h-full lg:h-auto md:h-auto border-0 rounded-lg  shadow-lg  relative flex flex-col w-full bg-white outline-none focus:outline-none">
+            <div className="translate h-auto lg:h-auto md:h-auto border-0 rounded-lg  shadow-lg  relative flex flex-col w-full bg-white outline-none focus:outline-none">
               {/* HEADER */}
               <div
                 onClick={() => handleClose()}

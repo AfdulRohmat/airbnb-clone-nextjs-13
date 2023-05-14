@@ -49,8 +49,8 @@ const RegisterModal: React.FC<RegisterModalProps> = (props) => {
   };
   const onToggle = useCallback(() => {
     registerModal.onClose();
-    loginModal.onClose();
-  }, [registerModal]);
+    loginModal.onOpen();
+  }, [registerModal, loginModal]);
 
   const bodyContent = (
     <>
