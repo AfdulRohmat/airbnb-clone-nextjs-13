@@ -22,11 +22,11 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
 
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
+
   const onRent = useCallback(() => {
     if (!currentUser) {
       return loginModal.onOpen();
     }
-
     // Open Rent Modal
     rentModal.onOpen();
   }, [currentUser, loginModal, useRentModal]);
